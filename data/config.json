@@ -1,0 +1,22 @@
+{
+  "min_premiums": {
+    "policy": 1000.0,
+    "per_unit": 500.0
+  },
+  "reconciliation_tolerance": 0.50,
+  "ocr_confidence_threshold": 0.80,
+  "ui": {
+    "primary_color": "#7E369F",
+    "title": "Roman's Rater 4.21"
+  },
+  "performance": {
+    "pdf_parsing_timeout": 10.0,
+    "rating_calculation_timeout": 3.0,
+    "audit_pdf_timeout": 15.0
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "romans_rater.log",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  }
+}
