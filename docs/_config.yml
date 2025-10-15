@@ -11,7 +11,7 @@ markdown: kramdown
 theme: null  # Using custom HTML/CSS
 
 # GitHub Pages specific
-url: "https://yourusername.github.io"
+url: "https://dmedina5.github.io"
 baseurl: "/romans-rater"
 
 # Exclude from processing
@@ -48,13 +48,13 @@ plugins:
 
 # SEO
 twitter:
-  username: yourusername
+  username: dmedina5
   card: summary_large_image
 
 social:
   name: Roman's Rater
   links:
-    - https://github.com/yourusername/romans-rater
+    - https://github.com/dmedina5/romans-rater
 
 logo: /assets/images/logo.png
 
