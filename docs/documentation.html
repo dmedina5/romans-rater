@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Roman's Rater 4.21 - Complete Documentation">
+    <title>Documentation - Roman's Rater 4.21</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .doc-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .doc-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .doc-nav {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1rem 0;
+            position: sticky;
+            top: 60px;
+            z-index: 100;
+        }
+
+        .doc-nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .doc-nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .doc-nav-links a:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .doc-section {
+            padding: 4rem 0;
+        }
+
+        .doc-section:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .doc-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .doc-card-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .doc-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .doc-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .doc-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: gap 0.3s;
+        }
+
+        .doc-card-link:hover {
+            gap: 0.75rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .code-example pre {
+            margin: 0;
+        }
+
+        .toc {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .toc h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            padding: 0.5rem 0;
+        }
+
+        .toc a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .toc a:hover {
+            color: var(--primary-color);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .doc-nav-links {
+                gap: 0.5rem;
+            }
+
+            .doc-nav-links a {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-calculator"></i>
+                <span>Roman's Rater 4.21</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="documentation.html" class="active">Documentation</a></li>
+                <li><a href="index.html#download">Download</a></li>
+                <li><a href="https://github.com/dmedina5/romans-rater" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="doc-hero">
+        <div class="container">
+            <h1><i class="fas fa-book"></i> Documentation</h1>
+            <p>Complete guides and references for Roman's Rater 4.21</p>
+        </div>
+    </section>
+
+    <!-- Doc Navigation -->
+    <nav class="doc-nav">
+        <div class="container">
+            <div class="doc-nav-links">
+                <a href="#quickstart"><i class="fas fa-rocket"></i> Quick Start</a>
+                <a href="#user-guide"><i class="fas fa-book-open"></i> User Guide</a>
+                <a href="#api"><i class="fas fa-code"></i> API Reference</a>
+                <a href="#testing"><i class="fas fa-vial"></i> Testing</a>
+                <a href="#resources"><i class="fas fa-link"></i> Resources</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Quick Start Section -->
+    <section id="quickstart" class="doc-section">
+        <div class="container">
+            <h2 class="section-title">Quick Start</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem; color: #666;">
+                Get Roman's Rater up and running in minutes. Perfect for first-time users.
+            </p>
+
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-download"></i></div>
+                    <h3>Installation</h3>
+                    <p>Download and install Roman's Rater on Windows, macOS, or Linux. Choose between standalone executable or Python source.</p>
+                    <ul class="feature-list">
+                        <li>Standalone executables (no Python needed)</li>
+                        <li>Python source installation</li>
+                        <li>System requirements</li>
+                        <li>First-time setup</li>
+                    </ul>
+                    <a href="quickstart.md" class="doc-card-link">
+                        Read Installation Guide <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-play-circle"></i></div>
+                    <h3>First PDF</h3>
+                    <p>Process your first CWIS quote PDF and calculate premiums in under 5 minutes.</p>
+                    <ul class="feature-list">
+                        <li>Upload and parse PDFs</li>
+                        <li>Review extracted data</li>
+                        <li>Calculate premiums</li>
+                        <li>Export results</li>
+                    </ul>
+                    <a href="quickstart.md#process-your-first-pdf" class="doc-card-link">
+                        Step-by-Step Tutorial <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-terminal"></i></div>
+                    <h3>CLI & GUI</h3>
+                    <p>Learn to use both the graphical interface and command-line mode effectively.</p>
+                    <div class="code-example">
+                        <pre># GUI Mode
+./romans-rater
+
+# CLI Mode
+./romans-rater quote.pdf
+
+# With OCR
+./romans-rater quote.pdf --ocr</pre>
+                    </div>
+                    <a href="quickstart.md#cli-mode" class="doc-card-link">
+                        View Commands <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Guide Section -->
+    <section id="user-guide" class="doc-section">
+        <div class="container">
+            <h2 class="section-title">User Guide</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem; color: #666;">
+                Complete guide to all features, workflows, and advanced usage.
+            </p>
+
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-desktop"></i></div>
+                    <h3>GUI Mode</h3>
+                    <p>Master the graphical user interface with detailed screenshots and workflows.</p>
+                    <ul class="feature-list">
+                        <li>Interface layout and navigation</li>
+                        <li>Upload and parsing workflows</li>
+                        <li>Editing policy data</li>
+                        <li>Viewing detailed breakdowns</li>
+                    </ul>
+                    <a href="user-guide.md#gui-mode" class="doc-card-link">
+                        GUI Documentation <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-calculator"></i></div>
+                    <h3>Rating Process</h3>
+                    <p>Understand how premiums are calculated using factor-based rating.</p>
+                    <div class="code-example">
+                        <pre>rate_per_unit = Base_AL
+              × F_body_class
+              × F_radius
+              × F_driver
+              × F_limit
+
+Premium = rate_per_unit × units</pre>
+                    </div>
+                    <a href="user-guide.md#rating-process" class="doc-card-link">
+                        Learn Rating <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-file-export"></i></div>
+                    <h3>Export & Audit</h3>
+                    <p>Generate compliance reports and export data in multiple formats.</p>
+                    <ul class="feature-list">
+                        <li>JSON exports for integration</li>
+                        <li>CSV for spreadsheet analysis</li>
+                        <li>PDF audit reports</li>
+                        <li>Database history</li>
+                    </ul>
+                    <a href="user-guide.md#export-and-audit" class="doc-card-link">
+                        Export Guide <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>Advanced Features</h3>
+                    <p>OCR configuration, custom settings, batch processing, and integrations.</p>
+                    <ul class="feature-list">
+                        <li>OCR for image-based PDFs</li>
+                        <li>Custom configuration</li>
+                        <li>Batch processing scripts</li>
+                        <li>Python API usage</li>
+                    </ul>
+                    <a href="user-guide.md#advanced-features" class="doc-card-link">
+                        Advanced Topics <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Reference Section -->
+    <section id="api" class="doc-section">
+        <div class="container">
+            <h2 class="section-title">API Reference</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem; color: #666;">
+                Complete API documentation for developers and integrators.
+            </p>
+
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-cube"></i></div>
+                    <h3>Core Classes</h3>
+                    <p>RomansRater, RatingEngine, and primary orchestration classes.</p>
+                    <div class="code-example">
+                        <pre>from src.main import RomansRater
+
+rater = RomansRater(
+    data_dir=Path("data"),
+    db_path=Path("data/calculations.db")
+)
+
+result = rater.rate_pdf("quote.pdf")</pre>
+                    </div>
+                    <a href="api-reference.md#core-classes" class="doc-card-link">
+                        Core API <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-database"></i></div>
+                    <h3>Data Models</h3>
+                    <p>Policy, Vehicle, Driver, and all domain models with validation.</p>
+                    <ul class="feature-list">
+                        <li>Policy, Vehicle, Driver classes</li>
+                        <li>ALSelection and Address</li>
+                        <li>RatingResult structure</li>
+                        <li>Validation methods</li>
+                    </ul>
+                    <a href="api-reference.md#data-models" class="doc-card-link">
+                        Model Reference <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-file-pdf"></i></div>
+                    <h3>PDF Processing</h3>
+                    <p>PDFParser, FieldExtractor, and OCR functionality.</p>
+                    <ul class="feature-list">
+                        <li>Multi-strategy text extraction</li>
+                        <li>Table parsing</li>
+                        <li>Field extraction with regex</li>
+                        <li>OCR with Tesseract</li>
+                    </ul>
+                    <a href="api-reference.md#pdf-processing" class="doc-card-link">
+                        Parser API <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-exchange-alt"></i></div>
+                    <h3>Storage & Export</h3>
+                    <p>Database operations, JSON/CSV export, and audit generation.</p>
+                    <ul class="feature-list">
+                        <li>SQLite database schema</li>
+                        <li>Save and retrieve calculations</li>
+                        <li>JSON/CSV exporters</li>
+                        <li>PDF audit reports</li>
+                    </ul>
+                    <a href="api-reference.md#storage" class="doc-card-link">
+                        Storage API <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testing Section -->
+    <section id="testing" class="doc-section">
+        <div class="container">
+            <h2 class="section-title">Testing Guide</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem; color: #666;">
+                Comprehensive test suite with 73 tests covering all features.
+            </p>
+
+            <div class="content-grid">
+                <div>
+                    <div class="doc-card" style="margin-bottom: 2rem;">
+                        <div class="doc-card-icon"><i class="fas fa-check-circle"></i></div>
+                        <h3>Test Coverage: 85%</h3>
+                        <p>73 test cases across 8 test files covering unit and integration tests.</p>
+                        <div class="code-example">
+                            <pre># Run all tests
+pytest
+
+# With coverage
+pytest --cov=src --cov-report=html
+
+# Specific tests
+pytest tests/test_rating_engine.py</pre>
+                        </div>
+                        <a href="testing-guide.md#running-tests" class="doc-card-link">
+                            View Test Commands <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="doc-grid">
+                        <div class="doc-card">
+                            <div class="doc-card-icon"><i class="fas fa-flask"></i></div>
+                            <h3>Unit Tests</h3>
+                            <p>60 unit tests for models, rating engine, parsers, and utilities.</p>
+                            <a href="testing-guide.md#unit-tests" class="doc-card-link">
+                                Unit Tests <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+
+                        <div class="doc-card">
+                            <div class="doc-card-icon"><i class="fas fa-network-wired"></i></div>
+                            <h3>Integration Tests</h3>
+                            <p>13 end-to-end tests for complete workflows and database operations.</p>
+                            <a href="testing-guide.md#integration-tests" class="doc-card-link">
+                                Integration Tests <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="toc">
+                    <h3>Test Statistics</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 0.5rem 0;"><strong>Total Tests</strong></td>
+                            <td style="text-align: right;">73</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 0.5rem 0;"><strong>Coverage</strong></td>
+                            <td style="text-align: right;">85%</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 0.5rem 0;"><strong>Test Files</strong></td>
+                            <td style="text-align: right;">8</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e0e0e0;">
+                            <td style="padding: 0.5rem 0;"><strong>Unit Tests</strong></td>
+                            <td style="text-align: right;">60</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem 0;"><strong>Integration</strong></td>
+                            <td style="text-align: right;">13</td>
+                        </tr>
+                    </table>
+
+                    <h3 style="margin-top: 2rem;">Topics</h3>
+                    <ul>
+                        <li><a href="testing-guide.md#running-tests">Running Tests</a></li>
+                        <li><a href="testing-guide.md#test-coverage">Coverage Reports</a></li>
+                        <li><a href="testing-guide.md#fixtures-and-test-data">Fixtures</a></li>
+                        <li><a href="testing-guide.md#writing-new-tests">Writing Tests</a></li>
+                        <li><a href="testing-guide.md#continuous-integration">CI/CD</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="doc-section">
+        <div class="container">
+            <h2 class="section-title">Additional Resources</h2>
+
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-hammer"></i></div>
+                    <h3>Build Guide</h3>
+                    <p>Build standalone executables for Windows, macOS, and Linux using PyInstaller.</p>
+                    <a href="https://github.com/dmedina5/romans-rater/blob/master/BUILD.md" class="doc-card-link" target="_blank">
+                        Build Instructions <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fab fa-github"></i></div>
+                    <h3>GitHub Repository</h3>
+                    <p>Browse source code, submit issues, and contribute to the project.</p>
+                    <a href="https://github.com/dmedina5/romans-rater" class="doc-card-link" target="_blank">
+                        View on GitHub <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-bug"></i></div>
+                    <h3>Report Issues</h3>
+                    <p>Found a bug or have a feature request? Let us know on GitHub Issues.</p>
+                    <a href="https://github.com/dmedina5/romans-rater/issues" class="doc-card-link" target="_blank">
+                        Report Issue <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-card-icon"><i class="fas fa-tag"></i></div>
+                    <h3>Release Notes</h3>
+                    <p>View changelog and download previous versions from GitHub Releases.</p>
+                    <a href="https://github.com/dmedina5/romans-rater/releases" class="doc-card-link" target="_blank">
+                        View Releases <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <h3 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">Quick Links</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; text-align: center;">
+                    <a href="quickstart.md" style="padding: 1rem; border: 2px solid var(--primary-color); border-radius: 8px; text-decoration: none; color: var(--primary-color); font-weight: 600; transition: all 0.3s;">
+                        <i class="fas fa-rocket"></i> Quick Start
+                    </a>
+                    <a href="user-guide.md" style="padding: 1rem; border: 2px solid var(--primary-color); border-radius: 8px; text-decoration: none; color: var(--primary-color); font-weight: 600; transition: all 0.3s;">
+                        <i class="fas fa-book-open"></i> User Guide
+                    </a>
+                    <a href="api-reference.md" style="padding: 1rem; border: 2px solid var(--primary-color); border-radius: 8px; text-decoration: none; color: var(--primary-color); font-weight: 600; transition: all 0.3s;">
+                        <i class="fas fa-code"></i> API Reference
+                    </a>
+                    <a href="testing-guide.md" style="padding: 1rem; border: 2px solid var(--primary-color); border-radius: 8px; text-decoration: none; color: var(--primary-color); font-weight: 600; transition: all 0.3s;">
+                        <i class="fas fa-vial"></i> Testing Guide
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Roman's Rater 4.21</h4>
+                    <p>Professional auto liability insurance rating engine</p>
+                    <p class="edition">Edition: 2025-01 | Version: 4.21.0</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="quickstart.md">Quick Start</a></li>
+                        <li><a href="user-guide.md">User Guide</a></li>
+                        <li><a href="api-reference.md">API Reference</a></li>
+                        <li><a href="testing-guide.md">Testing Guide</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/dmedina5/romans-rater">GitHub Repository</a></li>
+                        <li><a href="https://github.com/dmedina5/romans-rater/issues">Report Issues</a></li>
+                        <li><a href="https://github.com/dmedina5/romans-rater/releases">Release Notes</a></li>
+                        <li><a href="https://github.com/dmedina5/romans-rater/blob/master/BUILD.md">Build Guide</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="https://github.com/dmedina5/romans-rater" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" target="_blank">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Roman's Rater. Built with <i class="fas fa-heart"></i> using Python & NiceGUI</p>
+                <p>Offline-First | Production Ready | Fully Tested</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
