@@ -25,11 +25,45 @@ Roman's Rater 4.21 is a desktop tool that parses CWIS quote PDFs, calculates pre
 
 ## Installation
 
-### From Source
+### Option 1: Standalone Executable (Recommended)
+
+Download pre-built executables for your platform:
+
+**Windows:**
+```bash
+# Download from GitHub Releases
+# https://github.com/dmedina5/romans-rater/releases/latest
+
+# Extract and run
+romans-rater.exe
+```
+
+**macOS:**
+```bash
+# Download from GitHub Releases
+# https://github.com/dmedina5/romans-rater/releases/latest
+
+# Extract and run
+./romans-rater
+```
+
+**Linux:**
+```bash
+# Download from GitHub Releases
+# https://github.com/dmedina5/romans-rater/releases/latest
+
+# Extract and run
+chmod +x romans-rater
+./romans-rater
+```
+
+**No Python installation required!** Executables include everything needed.
+
+### Option 2: From Source
 
 ```bash
 # Clone repository
-git clone <repository-url>
+git clone https://github.com/dmedina5/romans-rater.git
 cd romans-rater
 
 # Create virtual environment
@@ -48,6 +82,10 @@ brew install tesseract
 
 # Windows: Download from https://github.com/UB-Mannheim/tesseract/wiki
 ```
+
+### Option 3: Build Your Own Executable
+
+See [BUILD.md](BUILD.md) for detailed instructions on building standalone executables for Windows, macOS, and Linux.
 
 ### Place Data Files
 
@@ -110,14 +148,21 @@ flake8 src/
 
 ### Building Executable
 
-```bash
-# Create standalone executable
-pyinstaller pyinstaller.spec
+See [BUILD.md](BUILD.md) for complete instructions.
 
-# Test executable
-dist/RomansRater  # Linux/macOS
-dist/RomansRater.exe  # Windows
+**Quick build:**
+```bash
+# Windows
+build-windows.bat
+
+# macOS
+./build-macos.sh
+
+# Linux
+./build-linux.sh
 ```
+
+Executables will be in `dist/` directory.
 
 ## Project Structure
 
