@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Roman's Rater 4.21 - Web Application">
+    <title>Roman's Rater 4.21 - Rating Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #7E369F;
+            --primary-dark: #5A2670;
+            --secondary-color: #4A90E2;
+            --success-color: #27AE60;
+            --warning-color: #F39C12;
+            --danger-color: #E74C3C;
+            --text-color: #333;
+            --bg-light: #f8f9fa;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            background: var(--bg-light);
+        }
+
+        .navbar {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .upload-area {
+            border: 3px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--bg-light);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background: white;
+        }
+
+        .upload-area.dragover {
+            border-color: var(--primary-color);
+            background: #f0e6f6;
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .results-section {
+            margin-top: 2rem;
+        }
+
+        .results-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background: var(--bg-light);
+            border-radius: 4px;
+        }
+
+        .result-row.total {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .result-row.subtotal {
+            border-top: 2px solid var(--border-color);
+            font-weight: 600;
+        }
+
+        .reconciliation {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .reconciliation.match {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .reconciliation.mismatch {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .vehicle-list, .driver-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .vehicle-card, .driver-card {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 4px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.875rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        @media (max-width: 1024px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid var(--bg-light);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-calculator"></i>
+                <span>Roman's Rater 4.21</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Application -->
+    <div class="container">
+        <div class="app-container">
+            <!-- Left Column: Input -->
+            <div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-file-upload"></i>
+                            Policy Information
+                        </h2>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Demo Mode:</strong> Enter policy information manually or use sample data.
+                    </div>
+
+                    <div class="form-group">
+                        <label>Insured Name</label>
+                        <input type="text" id="insuredName" placeholder="ABC Trucking LLC">
+                    </div>
+
+                    <div class="form-group">
+                        <label>State</label>
+                        <select id="state">
+                            <option value="">Select State</option>
+                            <option value="TX">Texas (TX)</option>
+                            <option value="CA">California (CA)</option>
+                            <option value="FL">Florida (FL)</option>
+                            <option value="NY">New York (NY)</option>
+                            <option value="IL">Illinois (IL)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="form-group">
+                            <label>Effective Date</label>
+                            <input type="date" id="effectiveDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Expiration Date</label>
+                            <input type="date" id="expirationDate">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Liability Limit</label>
+                        <select id="limit">
+                            <option value="1000000">$1,000,000 CSL</option>
+                            <option value="500000">$500,000 CSL</option>
+                            <option value="2000000">$2,000,000 CSL</option>
+                            <option value="5000000">$5,000,000 CSL</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 2rem;">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-truck"></i>
+                            Vehicles
+                        </h2>
+                        <button class="btn btn-secondary btn-small" onclick="addVehicle()">
+                            <i class="fas fa-plus"></i> Add Vehicle
+                        </button>
+                    </div>
+                    <div id="vehicleList" class="vehicle-list"></div>
+                </div>
+
+                <div class="card" style="margin-top: 2rem;">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-user"></i>
+                            Drivers
+                        </h2>
+                        <button class="btn btn-secondary btn-small" onclick="addDriver()">
+                            <i class="fas fa-plus"></i> Add Driver
+                        </button>
+                    </div>
+                    <div id="driverList" class="driver-list"></div>
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; margin-top: 2rem;" onclick="calculatePremium()">
+                    <i class="fas fa-calculator"></i>
+                    Calculate Premium
+                </button>
+
+                <button class="btn btn-success" style="width: 100%; margin-top: 1rem;" onclick="loadSampleData()">
+                    <i class="fas fa-file-import"></i>
+                    Load Sample Data
+                </button>
+            </div>
+
+            <!-- Right Column: Results -->
+            <div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-chart-line"></i>
+                            Rating Results
+                        </h2>
+                    </div>
+
+                    <div id="resultsContainer">
+                        <div class="alert alert-info">
+                            <i class="fas fa-arrow-left"></i>
+                            Enter policy information and click "Calculate Premium" to see results.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 2rem;">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-info-circle"></i>
+                            About This Demo
+                        </h2>
+                    </div>
+                    <p style="line-height: 1.6; color: #666;">
+                        This is a demonstration version of Roman's Rater 4.21. The actual production application
+                        requires Python backend with PDF parsing, Excel rating table loading, and database storage.
+                    </p>
+                    <p style="margin-top: 1rem; line-height: 1.6; color: #666;">
+                        <strong>Features in full version:</strong>
+                    </p>
+                    <ul style="margin-top: 0.5rem; padding-left: 2rem; line-height: 1.8; color: #666;">
+                        <li>PDF quote parsing with OCR</li>
+                        <li>Excel rating table loading</li>
+                        <li>State-specific tax calculations</li>
+                        <li>SQLite database storage</li>
+                        <li>JSON/CSV/PDF exports</li>
+                        <li>Complete audit trails</li>
+                    </ul>
+                    <a href="documentation.html" class="btn btn-secondary" style="width: 100%; margin-top: 1rem; justify-content: center;">
+                        <i class="fas fa-book"></i>
+                        View Full Documentation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize
+        let vehicles = [];
+        let drivers = [];
+
+        // Rating factors (simplified demo version)
+        const RATING_FACTORS = {
+            baseRates: {
+                'TX': 850, 'CA': 920, 'FL': 780, 'NY': 1050, 'IL': 890
+            },
+            bodyClass: {
+                'Van - Light': 1.15,
+                'Van - Medium': 1.25,
+                'Truck - Light': 1.20,
+                'Truck - Medium': 1.35,
+                'Truck - Heavy': 1.50,
+                'Tractor': 1.75
+            },
+            radius: {
+                'Local 0-50': 1.05,
+                'Intermediate 51-200': 1.20,
+                'Long Haul 200+': 1.45
+            },
+            limit: {
+                500000: 0.85,
+                1000000: 1.00,
+                2000000: 1.25,
+                5000000: 1.75
+            },
+            taxRates: {
+                'TX': { slt: 0.05, stamp: 0.0025, fireMarshal: 25 },
+                'CA': { slt: 0.06, stamp: 0.003, fireMarshal: 30 },
+                'FL': { slt: 0.055, stamp: 0.0028, fireMarshal: 20 },
+                'NY': { slt: 0.07, stamp: 0.0035, fireMarshal: 35 },
+                'IL': { slt: 0.05, stamp: 0.0025, fireMarshal: 25 }
+            }
+        };
+
+        function addVehicle() {
+            const id = vehicles.length;
+            vehicles.push({
+                id,
+                year: 2020,
+                make: 'Ford',
+                model: 'Transit Van',
+                bodyClass: 'Van - Light',
+                radius: 'Local 0-50',
+                value: 45000
+            });
+            renderVehicles();
+        }
+
+        function addDriver() {
+            const id = drivers.length;
+            drivers.push({
+                id,
+                firstName: 'John',
+                lastName: 'Smith',
+                yearsExp: 15,
+                mvrIncidents: 0
+            });
+            renderDrivers();
+        }
+
+        function removeVehicle(id) {
+            vehicles = vehicles.filter(v => v.id !== id);
+            renderVehicles();
+        }
+
+        function removeDriver(id) {
+            drivers = drivers.filter(d => d.id !== id);
+            renderDrivers();
+        }
+
+        function renderVehicles() {
+            const container = document.getElementById('vehicleList');
+            if (vehicles.length === 0) {
+                container.innerHTML = '<p style="color: #666; text-align: center;">No vehicles added yet.</p>';
+                return;
+            }
+
+            container.innerHTML = vehicles.map(v => `
+                <div class="vehicle-card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong>${v.year} ${v.make} ${v.model}</strong><br>
+                            <small style="color: #666;">
+                                Body Class: ${v.bodyClass}<br>
+                                Radius: ${v.radius}<br>
+                                Value: $${v.value.toLocaleString()}
+                            </small>
+                        </div>
+                        <button class="btn btn-small" style="background: var(--danger-color); color: white;" onclick="removeVehicle(${v.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderDrivers() {
+            const container = document.getElementById('driverList');
+            if (drivers.length === 0) {
+                container.innerHTML = '<p style="color: #666; text-align: center;">No drivers added yet.</p>';
+                return;
+            }
+
+            container.innerHTML = drivers.map(d => `
+                <div class="driver-card">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong>${d.firstName} ${d.lastName}</strong><br>
+                            <small style="color: #666;">
+                                Experience: ${d.yearsExp} years<br>
+                                MVR Incidents: ${d.mvrIncidents}
+                            </small>
+                        </div>
+                        <button class="btn btn-small" style="background: var(--danger-color); color: white;" onclick="removeDriver(${d.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function calculatePremium() {
+            const insuredName = document.getElementById('insuredName').value;
+            const state = document.getElementById('state').value;
+            const limit = parseInt(document.getElementById('limit').value);
+
+            if (!insuredName || !state || vehicles.length === 0 || drivers.length === 0) {
+                alert('Please fill in all required fields and add at least one vehicle and one driver.');
+                return;
+            }
+
+            // Calculate premiums
+            const baseRate = RATING_FACTORS.baseRates[state];
+            const limitFactor = RATING_FACTORS.limit[limit];
+
+            let vehiclePremiums = [];
+            let premiumSubtotal = 0;
+
+            vehicles.forEach(vehicle => {
+                const bodyClassFactor = RATING_FACTORS.bodyClass[vehicle.bodyClass];
+                const radiusFactor = RATING_FACTORS.radius[vehicle.radius];
+                const driverFactor = 1.02; // Simplified
+
+                const units = vehicle.value / 7500;
+                const ratePerUnit = baseRate * bodyClassFactor * radiusFactor * driverFactor * limitFactor;
+                const premium = Math.max(ratePerUnit * units, 500); // Minimum $500 per unit
+
+                vehiclePremiums.push({
+                    vehicle,
+                    ratePerUnit,
+                    units,
+                    premium
+                });
+
+                premiumSubtotal += premium;
+            });
+
+            // Enforce minimum premium
+            premiumSubtotal = Math.max(premiumSubtotal, 1000);
+
+            // Calculate fees
+            const policyFee = 150;
+            const perVehicleFee = vehicles.length * 50;
+            const feesTotal = policyFee + perVehicleFee;
+
+            // Calculate taxes
+            const taxRates = RATING_FACTORS.taxRates[state];
+            const taxableBase = premiumSubtotal + policyFee;
+            const slt = taxableBase * taxRates.slt;
+            const stamp = taxableBase * taxRates.stamp;
+            const fireMarshal = taxRates.fireMarshal;
+            const taxesTotal = slt + stamp + fireMarshal;
+
+            // Calculate total
+            const alTotal = premiumSubtotal + feesTotal + taxesTotal;
+
+            displayResults({
+                insuredName,
+                state,
+                vehiclePremiums,
+                premiumSubtotal,
+                policyFee,
+                perVehicleFee,
+                feesTotal,
+                slt,
+                stamp,
+                fireMarshal,
+                taxesTotal,
+                alTotal
+            });
+        }
+
+        function displayResults(results) {
+            const container = document.getElementById('resultsContainer');
+
+            container.innerHTML = `
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    <strong>Calculation Complete</strong> for ${results.insuredName} (${results.state})
+                </div>
+
+                <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--primary-color);">
+                    <i class="fas fa-truck"></i> Vehicle Premiums
+                </h3>
+                <div class="results-grid">
+                    ${results.vehiclePremiums.map((vp, idx) => `
+                        <div class="result-row">
+                            <span>Vehicle ${idx + 1}: ${vp.vehicle.year} ${vp.vehicle.make}</span>
+                            <span>$${vp.premium.toFixed(2)}</span>
+                        </div>
+                    `).join('')}
+                    <div class="result-row subtotal">
+                        <span>AL Premium Subtotal</span>
+                        <span>$${results.premiumSubtotal.toFixed(2)}</span>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--primary-color);">
+                    <i class="fas fa-file-invoice-dollar"></i> Fees
+                </h3>
+                <div class="results-grid">
+                    <div class="result-row">
+                        <span>Policy Fee</span>
+                        <span>$${results.policyFee.toFixed(2)}</span>
+                    </div>
+                    <div class="result-row">
+                        <span>Per-Vehicle Fee (×${vehicles.length})</span>
+                        <span>$${results.perVehicleFee.toFixed(2)}</span>
+                    </div>
+                    <div class="result-row subtotal">
+                        <span>Fees Total</span>
+                        <span>$${results.feesTotal.toFixed(2)}</span>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--primary-color);">
+                    <i class="fas fa-percentage"></i> Taxes
+                </h3>
+                <div class="results-grid">
+                    <div class="result-row">
+                        <span>SLT (Surplus Lines Tax)</span>
+                        <span>$${results.slt.toFixed(2)}</span>
+                    </div>
+                    <div class="result-row">
+                        <span>Stamp Tax</span>
+                        <span>$${results.stamp.toFixed(2)}</span>
+                    </div>
+                    <div class="result-row">
+                        <span>Fire Marshal Fee</span>
+                        <span>$${results.fireMarshal.toFixed(2)}</span>
+                    </div>
+                    <div class="result-row subtotal">
+                        <span>Taxes Total</span>
+                        <span>$${results.taxesTotal.toFixed(2)}</span>
+                    </div>
+                </div>
+
+                <div class="results-grid" style="margin-top: 1.5rem;">
+                    <div class="result-row total">
+                        <span>AL TOTAL</span>
+                        <span>$${results.alTotal.toFixed(2)}</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                    <button class="btn btn-success" style="flex: 1;" onclick="exportJSON()">
+                        <i class="fas fa-download"></i> Export JSON
+                    </button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="exportCSV()">
+                        <i class="fas fa-file-csv"></i> Export CSV
+                    </button>
+                </div>
+            `;
+
+            // Store results for export
+            window.lastResults = results;
+        }
+
+        function exportJSON() {
+            const data = {
+                insuredName: document.getElementById('insuredName').value,
+                state: document.getElementById('state').value,
+                vehicles,
+                drivers,
+                results: window.lastResults,
+                timestamp: new Date().toISOString()
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `romans-rater-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+        }
+
+        function exportCSV() {
+            const results = window.lastResults;
+            const csv = [
+                ['Field', 'Value'],
+                ['Insured Name', document.getElementById('insuredName').value],
+                ['State', document.getElementById('state').value],
+                ['Vehicles', vehicles.length],
+                ['Drivers', drivers.length],
+                [''],
+                ['AL Premium Subtotal', `$${results.premiumSubtotal.toFixed(2)}`],
+                ['Fees Total', `$${results.feesTotal.toFixed(2)}`],
+                ['Taxes Total', `$${results.taxesTotal.toFixed(2)}`],
+                ['AL Total', `$${results.alTotal.toFixed(2)}`]
+            ].map(row => row.join(',')).join('\n');
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `romans-rater-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        }
+
+        function loadSampleData() {
+            document.getElementById('insuredName').value = 'ABC Trucking LLC';
+            document.getElementById('state').value = 'TX';
+            document.getElementById('effectiveDate').value = '2025-01-01';
+            document.getElementById('expirationDate').value = '2026-01-01';
+            document.getElementById('limit').value = '1000000';
+
+            vehicles = [
+                {
+                    id: 0,
+                    year: 2020,
+                    make: 'Ford',
+                    model: 'Transit Van',
+                    bodyClass: 'Van - Light',
+                    radius: 'Local 0-50',
+                    value: 45000
+                },
+                {
+                    id: 1,
+                    year: 2021,
+                    make: 'Chevrolet',
+                    model: 'Express',
+                    bodyClass: 'Van - Medium',
+                    radius: 'Intermediate 51-200',
+                    value: 52000
+                }
+            ];
+
+            drivers = [
+                {
+                    id: 0,
+                    firstName: 'John',
+                    lastName: 'Smith',
+                    yearsExp: 15,
+                    mvrIncidents: 0
+                },
+                {
+                    id: 1,
+                    firstName: 'Jane',
+                    lastName: 'Doe',
+                    yearsExp: 8,
+                    mvrIncidents: 1
+                }
+            ];
+
+            renderVehicles();
+            renderDrivers();
+
+            alert('Sample data loaded! Click "Calculate Premium" to see results.');
+        }
+
+        // Initialize with sample data on load
+        window.addEventListener('load', () => {
+            loadSampleData();
+        });
+    </script>
+</body>
+</html>
