@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman's Rater - Unit Tests</title>
+    <!-- Mocha CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.2.0/mocha.min.css">
+</head>
+<body>
+    <div id="mocha"></div>
+
+    <!-- Mocha and Chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.2.0/mocha.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.3.10/chai.min.js"></script>
+
+    <!-- Vendor Libraries -->
+    <script src="../../vendor/pdf.js/pdf.min.js"></script>
+    <script src="../../vendor/tesseract.js/tesseract.min.js"></script>
+    <script src="../../vendor/xlsx/xlsx.full.min.js"></script>
+    <script src="../../vendor/dayjs/dayjs.min.js"></script>
+
+    <!-- Configure Mocha -->
+    <script>
+        mocha.setup('bdd');
+        const expect = chai.expect;
+        const assert = chai.assert;
+    </script>
+
+    <!-- Test Files -->
+    <script src="pdf-parse.test.js"></script>
+    <script src="xlsx-ingest.test.js"></script>
+    <script src="program-map.test.js"></script>
+    <script src="al-engine.test.js"></script>
+    <script src="fees-engine.test.js"></script>
+    <script src="reconcile.test.js"></script>
+    <script src="export.test.js"></script>
+
+    <!-- Run Tests -->
+    <script>
+        mocha.run();
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" fill="#7E369F">
+  <!-- Whale body -->
+  <ellipse cx="100" cy="90" rx="80" ry="50" opacity="0.9"/>
+
+  <!-- Whale tail -->
+  <path d="M 20 90 Q 10 70, 15 60 L 10 65 Q 5 80, 20 90 Z" opacity="0.9"/>
+
+  <!-- Whale flipper -->
+  <ellipse cx="70" cy="110" rx="15" ry="30" transform="rotate(-30 70 110)" opacity="0.8"/>
+
+  <!-- Whale head bump -->
+  <ellipse cx="150" cy="80" rx="35" ry="40" opacity="0.9"/>
+
+  <!-- Cool sunglasses frame -->
+  <rect x="110" y="70" width="45" height="20" rx="10" fill="none" stroke="#7E369F" stroke-width="4" opacity="0.95"/>
+  <rect x="150" y="70" width="45" height="20" rx="10" fill="none" stroke="#7E369F" stroke-width="4" opacity="0.95"/>
+
+  <!-- Bridge between glasses -->
+  <line x1="155" y1="80" x2="150" y2="80" stroke="#7E369F" stroke-width="3" opacity="0.95"/>
+
+  <!-- Glasses lenses (tinted) -->
+  <rect x="113" y="73" width="39" height="14" rx="7" fill="#7E369F" opacity="0.3"/>
+  <rect x="153" y="73" width="39" height="14" rx="7" fill="#7E369F" opacity="0.3"/>
+
+  <!-- Smile -->
+  <path d="M 130 95 Q 145 102, 160 95" fill="none" stroke="#7E369F" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+
+  <!-- Water spout -->
+  <path d="M 165 60 Q 168 45, 170 40 Q 172 45, 175 40 Q 177 45, 180 38"
+        fill="none" stroke="#7E369F" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+</svg>

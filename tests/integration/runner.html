@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman's Rater - Integration Tests</title>
+    <!-- Mocha CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.2.0/mocha.min.css">
+</head>
+<body>
+    <div id="mocha"></div>
+
+    <!-- Test container for DOM manipulation tests -->
+    <div id="test-container" style="display: none;">
+        <div id="parsed-content"></div>
+        <div id="results-content"></div>
+        <div id="reconciliation-content"></div>
+    </div>
+
+    <!-- Mocha and Chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/10.2.0/mocha.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.3.10/chai.min.js"></script>
+
+    <!-- Vendor Libraries -->
+    <script src="../../vendor/pdf.js/pdf.min.js"></script>
+    <script src="../../vendor/tesseract.js/tesseract.min.js"></script>
+    <script src="../../vendor/xlsx/xlsx.full.min.js"></script>
+    <script src="../../vendor/dayjs/dayjs.min.js"></script>
+    <script src="../../vendor/papaparse/papaparse.min.js"></script>
+    <script src="../../vendor/jspdf/jspdf.umd.min.js"></script>
+
+    <!-- Application Code -->
+    <script src="../../src/pdf-parse.js"></script>
+    <script src="../../src/ocr.js"></script>
+    <script src="../../src/xlsx-ingest.js"></script>
+    <script src="../../src/program-map.js"></script>
+    <script src="../../src/al-engine.js"></script>
+    <script src="../../src/ui.js"></script>
+
+    <!-- Configure Mocha -->
+    <script>
+        mocha.setup('bdd');
+        const expect = chai.expect;
+        const assert = chai.assert;
+
+        // Configure PDF.js worker
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = '../../vendor/pdf.js/pdf.worker.min.js';
+        }
+    </script>
+
+    <!-- Test Files -->
+    <script src="parse-and-display.test.js"></script>
+    <script src="load-tables.test.js"></script>
+
+    <!-- Run Tests -->
+    <script>
+        mocha.run();
+    </script>
+</body>
+</html>

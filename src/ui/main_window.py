@@ -338,10 +338,11 @@ def launch_gui(data_dir: Path, db_path: Path, config: dict):
     window.build()
 
     # Run the application
+    # Use native=False for better WSL/remote compatibility
     ui.run(
         title='Roman\'s Rater 4.21',
-        native=True,  # Run as desktop app
-        window_size=(1400, 900),
+        native=False,  # Run as web app (better for WSL/remote)
+        port=8080,
         reload=False,
-        show=True,
+        show=False,  # Don't auto-open browser in headless environments
     )

@@ -1,231 +1,308 @@
 # Roman's Rater 4.21
 
-**Offline Desktop Application for Commercial Auto Liability Insurance Rating**
+**A browser-only, offline-first commercial auto liability insurance rating tool**
 
-Roman's Rater 4.21 is a desktop tool that parses CWIS quote PDFs, calculates premiums using state-specific rating factors (CW or SS programs), applies fees and taxes per state rules, and provides audit trails for compliance.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-4.21.0-purple.svg)](https://github.com/dmedina5/romans-rater)
 
-## Features
+## 🚀 Live Demo
 
-- **PDF Parsing**: Extract policy, vehicle, and driver data from CWIS quote PDFs
-- **Rating Engine**: Calculate AL premiums using factor-based rating (Base_AL × F_state × F_vehicle × F_driver × F_limit)
-- **Multi-State Support**: Handle 50 US states with program-specific (CW/SS) rating tables
-- **Fees & Taxes**: Apply state-specific tax rates (SLT, Stamp, Fire Marshal)
-- **Reconciliation**: Compare calculated totals against PDF printed values (±$0.50 tolerance)
-- **Audit Trail**: Export calculations to JSON, CSV, and PDF formats
-- **OCR Fallback**: Handle image-based PDFs with Tesseract OCR
-- **Offline Operation**: No network dependencies - fully standalone
+**Access the application:** [https://dmedina5.github.io/romans-rater](https://dmedina5.github.io/romans-rater)
 
-## Requirements
-
-- **Python**: 3.11 or higher
-- **Operating System**: Windows 10+, Linux (Ubuntu 20.04+), or macOS 12+
-- **Data Files**:
-  - `2025 Cover Whale Rater AL only version.xlsx`
-  - `State Taxes and Fees 2025.xlsx`
-
-## Installation
-
-### Option 1: Standalone Executable (Recommended)
-
-Download pre-built executables for your platform:
-
-**Windows:**
-```bash
-# Download from GitHub Releases
-# https://github.com/dmedina5/romans-rater/releases/latest
-
-# Extract and run
-romans-rater.exe
-```
-
-**macOS:**
-```bash
-# Download from GitHub Releases
-# https://github.com/dmedina5/romans-rater/releases/latest
-
-# Extract and run
-./romans-rater
-```
-
-**Linux:**
-```bash
-# Download from GitHub Releases
-# https://github.com/dmedina5/romans-rater/releases/latest
-
-# Extract and run
-chmod +x romans-rater
-./romans-rater
-```
-
-**No Python installation required!** Executables include everything needed.
-
-### Option 2: From Source
-
-```bash
-# Clone repository
-git clone https://github.com/dmedina5/romans-rater.git
-cd romans-rater
-
-# Create virtual environment
-python3.11 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Install Tesseract OCR (for OCR fallback)
-# Ubuntu/Debian:
-sudo apt-get install tesseract-ocr
-
-# macOS:
-brew install tesseract
-
-# Windows: Download from https://github.com/UB-Mannheim/tesseract/wiki
-```
-
-### Option 3: Build Your Own Executable
-
-See [BUILD.md](BUILD.md) for detailed instructions on building standalone executables for Windows, macOS, and Linux.
-
-### Place Data Files
-
-```bash
-mkdir -p data
-cp /path/to/2025_Cover_Whale_Rater_AL_only_version.xlsx data/
-cp /path/to/State_Taxes_and_Fees_2025.xlsx data/
-```
-
-## Quick Start
-
-```bash
-# Run application
-python src/main.py
-
-# Or with installed package
-romans-rater
-```
-
-## Usage
-
-1. **Upload PDF**: Click "Upload PDF" to select a CWIS quote
-2. **Review Parsed Data**: Verify extracted policy, vehicle, and driver information
-3. **Calculate Premium**: Click "Recalculate" to run rating engine
-4. **Review Results**: Check AL Total and reconciliation status
-5. **Export**: Generate JSON, CSV, or audit PDF for compliance
-
-See [docs/user_guide.md](docs/user_guide.md) for detailed workflows.
-
-## Development
-
-### Running Tests
-
-```bash
-# All tests
-pytest
-
-# Unit tests only
-pytest tests/unit/
-
-# Integration tests
-pytest tests/integration/
-
-# With coverage
-pytest --cov=src --cov-report=html
-```
-
-### Type Checking
-
-```bash
-mypy src/
-```
-
-### Code Formatting
-
-```bash
-black src/
-flake8 src/
-```
-
-### Building Executable
-
-See [BUILD.md](BUILD.md) for complete instructions.
-
-**Quick build:**
-```bash
-# Windows
-build-windows.bat
-
-# macOS
-./build-macos.sh
-
-# Linux
-./build-linux.sh
-```
-
-Executables will be in `dist/` directory.
-
-## Project Structure
-
-```
-romans-rater/
-├── src/
-│   ├── parsers/       # PDF parsing and OCR
-│   ├── loaders/       # Excel workbook data loaders
-│   ├── models/        # Domain entities
-│   ├── rating/        # Rating engine (core logic)
-│   ├── fees/          # Fees and taxes calculation
-│   ├── exports/       # Export and audit generation
-│   ├── storage/       # Local persistence
-│   ├── ui/            # User interface (NiceGUI)
-│   └── main.py        # Application entry point
-├── tests/
-│   ├── unit/          # Unit tests
-│   ├── integration/   # Integration tests
-│   └── fixtures/      # Test data
-├── data/              # Excel workbooks and config
-└── docs/              # Documentation
-```
-
-## Configuration
-
-Edit `data/config.json` to customize settings:
-
-```json
-{
-  "min_premiums": {
-    "policy": 1000.0,
-    "per_unit": 500.0
-  },
-  "reconciliation_tolerance": 0.50,
-  "ocr_confidence_threshold": 0.80
-}
-```
-
-## Architecture
-
-- **Language**: Python 3.11+
-- **UI**: NiceGUI (Python-native web framework)
-- **PDF Processing**: pdfplumber, PyMuPDF, pytesseract
-- **Data Loading**: openpyxl, pandas
-- **Storage**: SQLite3 (local database)
-- **Packaging**: PyInstaller (standalone executable)
-
-## License
-
-MIT License - See LICENSE file for details
-
-## Support
-
-For issues, feature requests, or questions, please open an issue in the repository.
-
-## Documentation
-
-- [User Guide](docs/user_guide.md) - Complete usage instructions
-- [Specification](specs/001-roman-s-rater/spec.md) - Detailed requirements
-- [Technical Plan](specs/001-roman-s-rater/plan.md) - Architecture and design
-- [Quickstart](specs/001-roman-s-rater/quickstart.md) - Development workflows
+No installation required - runs entirely in your browser!
 
 ---
 
-**Version**: 4.21.0
-**Status**: MVP Foundation Complete
+## 📋 Overview
+
+Roman's Rater 4.21 is a specialized rating tool for commercial auto liability insurance that:
+
+- **Parses CWIS Quote PDFs** to extract policy, vehicle, and driver data
+- **Loads rating tables** from Excel workbooks (Cover Whale and Standard & Surplus)
+- **Calculates AL base premiums** using dynamic program detection and factor chains
+- **Applies state-specific taxes and fees** with admitted/non-admitted logic
+- **Reconciles computed totals** against PDF-extracted values with tolerance checking
+- **Exports audit reports** in JSON, CSV, and PDF formats
+
+### Key Features
+
+✅ **100% Browser-Only** - No backend, no servers, no data uploads
+✅ **Offline-First** - Works without internet after initial load
+✅ **Privacy-Focused** - All processing happens locally in your browser
+✅ **Full Audit Trail** - Complete factor trace for transparency
+✅ **WCAG AA Accessible** - Keyboard navigation, ARIA labels, screen reader support
+✅ **Professional Reports** - Export to JSON, CSV, and branded PDF
+
+---
+
+## 🎯 Use Cases
+
+- **Rate Validation** - Verify insurer-quoted premiums against rating tables
+- **Audit Trail** - Generate detailed factor trace reports for compliance
+- **Training** - Teach underwriters how rating factors are applied
+- **Quality Assurance** - Compare multiple quotes for consistency
+- **Documentation** - Export audit reports for underwriting files
+
+---
+
+## 🏃 Quick Start
+
+### Option 1: Use GitHub Pages (Recommended)
+
+Simply visit: **[https://dmedina5.github.io/romans-rater](https://dmedina5.github.io/romans-rater)**
+
+### Option 2: Run Locally
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/dmedina5/romans-rater.git
+   cd romans-rater
+   ```
+
+2. **Serve with a local web server:**
+   ```bash
+   # Using Python 3
+   python3 -m http.server 8000
+
+   # Using Python 2
+   python -m SimpleHTTPServer 8000
+
+   # Using Node.js http-server
+   npx http-server -p 8000
+   ```
+
+3. **Open in browser:**
+   ```
+   http://localhost:8000
+   ```
+
+> **Note:** You must use a web server (not `file://`) due to CORS restrictions with vendor libraries.
+
+---
+
+## 📖 How to Use
+
+### Step 1: Upload Files
+
+**Required:**
+- One or more **CWIS Quote PDF(s)** (max 50MB each)
+- **Cover Whale Rater Excel** (`2025 Cover Whale Rater Version 4.21.xlsx`)
+- **State Taxes & Fees Excel** (`State Taxes and Fees 2025.xlsx`)
+
+**Or** click **"Use Pre-loaded Tables"** to use embedded test data.
+
+### Step 2: Parse PDFs
+
+Click **"Parse PDFs"** to extract policy, vehicle, and driver data. The system will:
+- Extract text from PDF pages
+- Parse policy header (insured, dates, state)
+- Extract vehicle schedule (VINs, classes, body types)
+- Extract driver schedule (names, ages, experience, violations)
+- Prompt for OCR if pages contain images
+
+### Step 3: Load Rating Tables
+
+Click **"Load Rating Tables"** to ingest Excel workbooks. The system will:
+- Parse CW and SS rating tables by state
+- Extract body class factors, radius factors, limit factors
+- Load attribute bands (age, experience, MVR)
+- Load state tax/fee rules
+
+### Step 4: Calculate AL Base Premium
+
+Navigate to the **"AL Base Rating"** tab:
+- Select liability limit (pre-populated from PDF)
+- Select radius bucket (pre-populated from PDF)
+- Choose driver aggregation method (Mean, Worst, or Weighted)
+- Click **"Recalculate Premium"**
+
+The system will:
+- Detect CW vs SS program automatically
+- Apply factor chain: `Base × BodyClass × Radius × Limit × State × Driver`
+- Display per-unit premiums and factor trace
+
+### Step 5: Review Fees & Taxes
+
+Navigate to the **"Fees & Taxes"** tab:
+- Toggle admitted/non-admitted status
+- Override broker fee if needed
+- View itemized fee breakdown
+- See taxable base and tax calculations
+
+### Step 6: Review Results
+
+Navigate to the **"Results"** tab to see:
+- AL base premium calculation with factor breakdown
+- Per-unit and per-driver details
+- Full factor trace with calculation formula
+- **Reconciliation** (if PDF has totals):
+  - ✓ PASS / ⚠ WARNING / ✗ FAIL status
+  - Component-by-component delta comparison
+  - Tolerance checking (default ±$5.00)
+
+### Step 7: Export Audit Report
+
+Navigate to the **"Audit Export"** tab:
+- **Export JSON** - Complete data for programmatic use
+- **Export CSV** - Spreadsheet-friendly format
+- **Export PDF** - Professional branded report
+
+---
+
+## 🏗️ Architecture
+
+### Technology Stack
+
+- **Vanilla JavaScript** (ES2020+) - No frameworks
+- **PDF.js v3.11+** - Client-side PDF parsing
+- **Tesseract.js v4.0+** - OCR for image-based PDFs
+- **SheetJS v0.18+** - Excel workbook parsing
+- **dayjs v1.11+** - Date manipulation
+- **PapaParse v5.4+** - CSV generation
+- **jsPDF v2.5+** - PDF report generation
+- **Mocha/Chai** - Unit and integration testing
+
+### File Structure
+
+```
+romans-rater/
+├── index.html              # Main application entry point
+├── assets/
+│   ├── styles.css          # WCAG AA compliant styling
+│   └── whale-glasses.svg   # Brand watermark
+├── src/
+│   ├── main.js             # Application bootstrap
+│   ├── ui.js               # UI management and event handlers
+│   ├── pdf-parse.js        # PDF text extraction and parsing
+│   ├── ocr.js              # OCR fallback for image PDFs
+│   ├── xlsx-ingest.js      # Excel workbook parsing
+│   ├── program-map.js      # CW/SS program detection
+│   ├── al-engine.js        # AL premium calculation
+│   ├── fees-engine.js      # Taxes and fees calculation
+│   ├── reconcile.js        # Computed vs PDF reconciliation
+│   └── export.js           # JSON/CSV/PDF export
+├── vendor/                 # Third-party libraries (bundled)
+├── data/                   # Pre-baked JSON fallbacks
+└── tests/
+    ├── unit/               # Unit tests (180+ tests)
+    └── integration/        # Integration tests
+```
+
+### Security & Privacy
+
+**Content Security Policy (CSP):**
+```html
+default-src 'self';
+script-src 'self' 'unsafe-inline';
+worker-src 'self' blob:;
+style-src 'self' 'unsafe-inline';
+img-src 'self' data: blob:;
+connect-src 'none';
+```
+
+**Key Security Features:**
+- ✅ No network requests after page load (`connect-src 'none'`)
+- ✅ All data processing happens client-side
+- ✅ No cookies, no tracking, no analytics
+- ✅ No data sent to external servers
+- ✅ All files stay on your device
+
+---
+
+## 🧪 Testing
+
+### Run Unit Tests
+
+Open in browser:
+```
+http://localhost:8000/tests/unit/runner.html
+```
+
+**Test Coverage:**
+- PDF parsing (50+ tests)
+- Excel ingestion (40+ tests)
+- Program mapping (40+ tests)
+- AL engine (50+ tests)
+- Fees engine (40+ tests)
+- Reconciliation (40+ tests)
+- Export (30+ tests)
+
+### Run Integration Tests
+
+Open in browser:
+```
+http://localhost:8000/tests/integration/runner.html
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 🙏 Acknowledgments
+
+**Open Source Libraries:**
+- [PDF.js](https://mozilla.github.io/pdf.js/) by Mozilla
+- [Tesseract.js](https://tesseract.projectnaptha.com/) by Naptha
+- [SheetJS](https://sheetjs.com/) by SheetJS LLC
+- [Day.js](https://day.js.org/) by iamkun
+- [PapaParse](https://www.papaparse.com/) by Matt Holt
+- [jsPDF](https://github.com/parallax/jsPDF) by James Hall
+
+---
+
+## 📞 Support
+
+- **Issues:** [GitHub Issues](https://github.com/dmedina5/romans-rater/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/dmedina5/romans-rater/discussions)
+
+---
+
+## 🗺️ Roadmap
+
+**Completed (v4.21.0):**
+- ✅ PDF parsing with OCR fallback
+- ✅ Excel table ingestion (CW/SS)
+- ✅ AL premium calculation
+- ✅ Fees and taxes calculation
+- ✅ Reconciliation with tolerance
+- ✅ JSON/CSV/PDF export
+
+**Future Enhancements:**
+- 🔄 Support for additional states
+- 🔄 Multi-policy batch processing
+- 🔄 Historical rate comparisons
+- 🔄 Custom factor overrides
+- 🔄 Integration with rating systems APIs
+
+---
+
+## 📊 Project Stats
+
+- **Lines of Code:** ~8,000
+- **Test Coverage:** 180+ unit tests
+- **Supported States:** 50+ (CW/SS combined)
+- **File Size:** ~5MB (with vendor libraries)
+- **Browser Support:** Chrome, Firefox, Safari, Edge (modern versions)
+
+---
+
+**Built with ❤️ for insurance professionals**
+
+**Version:** 4.21.0
+**Last Updated:** January 2025
